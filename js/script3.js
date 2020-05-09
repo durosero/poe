@@ -25,10 +25,40 @@ formHeroes.addEventListener('submit', function(event) {
 });
 
 
+document.querySelector('table').addEventListener('click', (event) => {
+    console.log(event);
+
+    if (event.target.nodeName == 'A') {
+        var valor = event.target.getAttribute('data');
+        var vengadores = JSON.parse(localStorage.getItem('vengadores'));
+        var vengadoresAux = [];
+
+        vengadores.forEach((heroe, index) => {
+            if (heroe.nombre != valor) {
+                vengadoresAux.push(heroe);
+            }
+        });
+
+        localStorage.setItem('vengadores', JSON.stringify(vengadoresAux));
+
+        //  event.target.style.backgroundColor = 'orange';
+        console.log(valor);
+    }
+    listar();
+
+
+});
+
 
 function listar() {
+    var vengadores;
     var registro = document.getElementById('registro');
-    var vengadores = JSON.parse(localStorage.getItem('vengadores'));
+    if (localStorage.getItem('vengadores') == null) {
+        vengadores = [];
+    } else {
+        vengadores = JSON.parse(localStorage.getItem('vengadores'));
+    }
+
     registro.innerHTML = "";
 
     //console.log(vengadores);
@@ -42,6 +72,7 @@ function listar() {
             <td>${heroe.alias}</td>
             <td>${heroe.poder}</td>
             <td>${heroe.color}</td>
+            <td> <a href ='javascript:void(0)' data='${heroe.nombre}'  >Eliminar</a> </td>
         `;
         registro.appendChild(nuevaFila);
 
