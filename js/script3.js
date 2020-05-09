@@ -20,5 +20,33 @@ formHeroes.addEventListener('submit', function(event) {
         vengadores.push(heroe);
     }
     localStorage.setItem('vengadores', JSON.stringify(vengadores));
+    listar();
 
 });
+
+
+
+function listar() {
+    var registro = document.getElementById('registro');
+    var vengadores = JSON.parse(localStorage.getItem('vengadores'));
+    registro.innerHTML = "";
+
+    //console.log(vengadores);
+
+    vengadores.forEach((heroe, index) => {
+        var nuevaFila = document.createElement('tr');
+
+        nuevaFila.innerHTML = `
+            <td>${index+1}</td>
+            <td>${heroe.nombre}</td>
+            <td>${heroe.alias}</td>
+            <td>${heroe.poder}</td>
+            <td>${heroe.color}</td>
+        `;
+        registro.appendChild(nuevaFila);
+
+    });
+
+}
+
+listar();
